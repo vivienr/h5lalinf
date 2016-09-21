@@ -19,11 +19,11 @@ post = data[args.dataset]
 
 def single_line(item):
     return [item.ljust(20),
-            str(post[item][-1]).ljust(15),
-            str(post[item][-2]).ljust(15),
-            str(post[item][-3]).ljust(15),
+            str(post[item][-1]).ljust(16),
+            str(post[item][-2]).ljust(16),
+            str(post[item][-3]).ljust(16),
             ' ... ',
-            str(post[item][0]).ljust(15)]
+            str(post[item][0]).ljust(16)]
 
 lines=['\t'.join(single_line(item)) for item in post.dtype.names]
 
