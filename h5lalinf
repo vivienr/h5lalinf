@@ -13,17 +13,31 @@ parser.add_argument('-d', '--dataset', type=str, help='dataset in HDF5 file.',
 
 args = parser.parse_args()
 
-data=h5py.File(args.posterior, 'r')
+data = h5py.File(args.posterior, 'r')
 
 post = data[args.dataset]
 
 def single_line(item):
-    return [item.ljust(20),
-            str(post[item][-1]).ljust(16),
-            str(post[item][-2]).ljust(16),
-            str(post[item][-3]).ljust(16),
-            ' ... ',
-            str(post[item][0]).ljust(16)]
+    line=[item.ljust(20)]
+    try:
+        line.append(str(post[item][-1]))
+    except:
+        pass
+    try:
+        line.append(str(post[item][-2]))
+    except:
+        pass
+    try:
+        line.append(str(post[item][-3]))
+    except:
+        pass
+    line.append(' ... ')
+    try:
+        line.append(str(post[item][0]).ljust(16))
+    except:
+        print 'HDF5 file empty.'
+        exit()
+    return line
 
 lines=['\t'.join(single_line(item)) for item in post.dtype.names]
 
